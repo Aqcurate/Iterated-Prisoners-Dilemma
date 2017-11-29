@@ -1,5 +1,6 @@
 from .conf import choices
 from abc import ABCMeta, abstractmethod 
+from random import random
 
 class Prisoner(metaclass=ABCMeta):
     def __init__(self):
@@ -58,3 +59,39 @@ class Spiteful(Prisoner):
     @staticmethod
     def get_name():
         return 'Spiteful'
+
+class ZDExtort(Prisoner):
+    def get_action(self, opponent):
+        x = 2
+        if len(opponent.history) == 0:
+            return choices['COOP']
+        elif opponent.history[-1] == choices['COOP']:
+            if self.history[-1] == choices['COOP']:
+                p = 1 - (2.0*x-2)/(4*x+1)
+            else:
+                p = (x + 4.0)/(4*x+1)
+            return choices['COOP'] if random() < p else choices['DEFECT']
+        else:
+            return choices['DEFECT']
+
+    @staticmethod
+    def get_name():
+        return 'ZD Extortion'
+
+class ZDGenerous(Prisoner):
+    def get_action(self, opponent):
+        x = 2
+        if len(opponent.history) == 0:
+            return choices['COOP']
+        elif opponent.history[-1] == choices['DEFECT']:
+            if self.history[-1] == choices['COOP']:
+                p = (x-1.0)/(3*x+2)
+            else:
+                p = 2*(x + 1.0)/(3*x+2)
+            return choices['COOP'] if random() < p else choices['DEFECT']
+        else:
+            return choices['COOP']
+
+    @staticmethod
+    def get_name():
+        return 'ZD Generous'
