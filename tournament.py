@@ -2,10 +2,13 @@ from prisonerfactory import PrisonerFactory as PF
 from ipd import PrisonersDilemma as PD
 import random
 
+from graph import TimelineGif
+
 class Tournament:
 
     scores = {}
     total = 0
+    timeline = []
     
     def __init__(self, prisoners, generations=25):
         self.prisoners = prisoners
@@ -47,8 +50,9 @@ class Tournament:
     def _recount(self):
         for p in self.queue:
             self.prisoners[p.get_name()] += 1
+        self.timeline.append(self.prisoners)
 
-    def run_tourny(self):
+    def run_tourny(self, printing=True):
         for _ in range(self.generations):
            self._tournament_play()
            self._total_points()
@@ -56,15 +60,6 @@ class Tournament:
            self._repopulate_queue()
            self._reset()
            self._recount()
-           print(self.prisoners)
-
-if __name__ == '__main__':
-    p = {
-        'Nice': 25,
-        'Tit for Tat': 25,
-        'Greedy': 25,
-        'Spiteful': 25,
-    }
-
-    t = Tournament(p, 50)
-    t.run_tourny()
+           if printing:
+               print(self.prisoners) 
+        return self.timeline

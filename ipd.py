@@ -1,5 +1,4 @@
 from conf import choices, points
-from prisonerfactory import PrisonerFactory
 import random
 
 class PrisonersDilemma:
@@ -49,13 +48,3 @@ class PrisonersDilemma:
     def _reset_history(self):
         self.p1.history = []
         self.p2.history = []
-
-
-if __name__ == '__main__':
-    p1 = PrisonerFactory.get_prisoner('Spiteful')
-    p2 = PrisonerFactory.get_prisoner('Greedy')
-    c = PrisonersDilemma(p1, p2)
-    c.iterative_play(100, 200)
-
-    print(p1.avg_score)
-    print(p2.avg_score)
