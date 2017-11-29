@@ -13,14 +13,14 @@ class TimelineGif:
 
         self.fig, self.ax = plt.subplots()
 
-    def autopct_gen(self, pct):
+    def _autopct_gen(self, pct):
         return ('%.2f' % pct) if pct > 1 else ''
 
     def _update(self, frame):
         self.ax.clear()        
         self.ax.axis('equal')
         data = [self.timeline[frame][label] for label in self.labels]
-        self.ax.pie(data, labels=self.labels, colors=self.colors, autopct=self.autopct_gen, startangle=90)
+        self.ax.pie(data, labels=self.labels, colors=self.colors, autopct=self._autopct_gen, startangle=90)
         title = 'Generation ' + str(frame+1)
         self.ax.set_title(title)
 
