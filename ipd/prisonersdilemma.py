@@ -1,11 +1,15 @@
-from conf import choices, points
-import random
+from .conf import choices, points
+from .prisoner import Prisoner
+from random import randint
 
 class PrisonersDilemma:
-    
     def __init__(self, p1, p2):
-        self.p1 = p1
-        self.p2 = p2
+        if isinstance(p1, str) and isinstance(p2, str):
+            self.p1 = Prisoner.get_prisoner(p1)
+            self.p2 = Prisoner.get_prisoner(p2)
+        elif isinstance(p1, Prisoner) and isinstance(p2, Prisoner):
+            self.p1 = p1
+            self.p2 = p2
 
     def play(self):
         action1 = self.p1.get_action(self.p2)
@@ -35,7 +39,7 @@ class PrisonersDilemma:
     
     def iterative_play(self, range_min=200, range_max=201):
         
-        num = random.randint(range_min, range_max)
+        num = randint(range_min, range_max)
 
         for k in range(num):
             self.play()
@@ -44,6 +48,9 @@ class PrisonersDilemma:
 
         self.p1.avg_score = self.p1.score / num
         self.p2.avg_score = self.p2.score / num
+
+    def get_prisoners(self):
+        return self.p1, self.p2
 
     def _reset_history(self):
         self.p1.history = []

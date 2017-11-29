@@ -1,8 +1,6 @@
-from prisonerfactory import PrisonerFactory as PF
-from ipd import PrisonersDilemma as PD
-import random
-
-from graph import TimelineGif
+from .prisoner import Prisoner
+from .prisonersdilemma import PrisonersDilemma as PD
+from random import randint
 
 class Tournament:
 
@@ -14,7 +12,7 @@ class Tournament:
         self.prisoners = prisoners
         self.generations = generations
         self.scores = self.scores.fromkeys(prisoners, 0)
-        self.queue = [PF.get_prisoner(k) for k, v in prisoners.items() for _ in range(v)]
+        self.queue = [Prisoner.get_prisoner(k) for k, v in prisoners.items() for _ in range(v)]
         self.pop_size = len(self.queue)
 
     def _tournament_play(self):
@@ -36,10 +34,10 @@ class Tournament:
     def _repopulate_queue(self):
         self.queue = []
         for _ in range(self.pop_size):
-            rand = random.randint(0, self.total)
+            rand = randint(0, self.total)
             for p, score in self.scores.items():
                 if rand < score:
-                    self.queue.append(PF.get_prisoner(p))
+                    self.queue.append(Prisoner.get_prisoner(p))
                     break
 
     def _reset(self):

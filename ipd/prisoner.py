@@ -1,11 +1,17 @@
+from .conf import choices
 from abc import ABCMeta, abstractmethod 
-from conf import choices
 
 class Prisoner(metaclass=ABCMeta):
     def __init__(self):
         self.score = 0.0
         self.avg_score = 0.0
         self.history = []
+
+    @staticmethod
+    def get_prisoner(name):
+        for subclass in Prisoner.__subclasses__():
+            if subclass.get_name() == name:
+                return subclass()
 
     @abstractmethod
     def get_action(self, opponent):
