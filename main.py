@@ -1,10 +1,11 @@
 from ipd.prisonersdilemma import PrisonersDilemma as PD
 from ipd.tournament import Tournament
 from ipd.graph import TimelineGif as TG
+from random import randint
 
 def test_pd():
     c = PD('Spiteful', 'Greedy')
-    c.iterative_play(100, 200)
+    c.iterative_play(randint(100,200))
 
     p1, p2 = c.get_prisoners()
 

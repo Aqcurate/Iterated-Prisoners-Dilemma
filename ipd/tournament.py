@@ -8,9 +8,10 @@ class Tournament:
     total = 0
     timeline = []
     
-    def __init__(self, prisoners, generations=25):
+    def __init__(self, prisoners, generations=25, gamelength=randint(100, 200)):
         self.prisoners = prisoners
         self.generations = generations
+        self.gamelength = gamelength
         self.scores = self.scores.fromkeys(prisoners, 0)
         self.queue = [Prisoner.get_prisoner(k) for k, v in prisoners.items() for _ in range(v)]
         self.pop_size = len(self.queue)
@@ -18,7 +19,7 @@ class Tournament:
     def _tournament_play(self):
         for k, p1 in enumerate(self.queue):
             for p2 in self.queue[1+k:]:
-                PD(p1, p2).iterative_play()
+                PD(p1, p2).iterative_play(self.gamelength)
 
     def _total_points(self):
         for p in self.queue:

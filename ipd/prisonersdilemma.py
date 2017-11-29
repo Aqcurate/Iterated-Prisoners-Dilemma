@@ -37,10 +37,7 @@ class PrisonersDilemma:
                 self.p1.score += points['PUNISHMENT']
                 self.p2.score += points['PUNISHMENT']
     
-    def iterative_play(self, range_min=200, range_max=201):
-        
-        num = randint(range_min, range_max)
-
+    def iterative_play(self, num):
         for k in range(num):
             self.play()
 
