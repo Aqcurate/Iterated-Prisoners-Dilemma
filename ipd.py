@@ -9,8 +9,8 @@ class PrisonersDilemma:
         self.p2 = p2
 
     def play(self):
-        action1 = self.p1.get_action(p2)
-        action2 = self.p2.get_action(p1)
+        action1 = self.p1.get_action(self.p2)
+        action2 = self.p2.get_action(self.p1)
 
         self.p1.history.append(action1)
         self.p2.history.append(action2)
@@ -34,28 +34,28 @@ class PrisonersDilemma:
                 self.p1.score += points['PUNISHMENT']
                 self.p2.score += points['PUNISHMENT']
     
-    def iterative_play(self, range_min, range_max):
+    def iterative_play(self, range_min=200, range_max=201):
         
         num = random.randint(range_min, range_max)
 
         for k in range(num):
             self.play()
 
-        self.reset_history()
+        self._reset_history()
 
-        self.p1.score /= num
-        self.p2.score /= num
+        self.p1.avg_score = self.p1.score / num
+        self.p2.avg_score = self.p2.score / num
 
-    def reset_history(self):
-        p1.history = []
-        p2.history = []
+    def _reset_history(self):
+        self.p1.history = []
+        self.p2.history = []
 
 
-p1 = PrisonerFactory.get_prisoner('Tit for Tat')
-p2 = PrisonerFactory.get_prisoner('Greedy')
-c = PrisonersDilemma(p1, p2)
-c.iterative_play(100, 200)
+if __name__ == '__main__':
+    p1 = PrisonerFactory.get_prisoner('Spiteful')
+    p2 = PrisonerFactory.get_prisoner('Greedy')
+    c = PrisonersDilemma(p1, p2)
+    c.iterative_play(100, 200)
 
-print(p1.score)
-print(p2.score)
-
+    print(p1.avg_score)
+    print(p2.avg_score)
